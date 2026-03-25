@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 <body>
     <!-- Custom Cursor -->
     <div class="cursor"></div>
+    <div class="cursor-follower"></div>
     
     <!-- Loading Animation -->
     <div class="loader">
@@ -45,10 +47,11 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="particles" id="particles"></div>
         <div class="hero-container">
-            <div class="hero-content">
+            <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
                 <div class="hero-badge">
-                    <span class="badge-text">Welcome to my portfolio</span>
+                    <span class="badge-text">✨ Welcome to my portfolio ✨</span>
                 </div>
                 <h1 class="hero-title">
                     Hi, I'm <span class="highlight">Umang Raj</span>
@@ -60,21 +63,21 @@
                     <button id="downloadResumeBtn" class="btn btn-secondary">Download Resume <i class="fas fa-download"></i></button>
                 </div>
                 <div class="hero-stats">
-                    <div class="stat">
+                    <div class="stat" data-aos="zoom-in" data-aos-delay="200">
                         <span class="stat-number">5+</span>
                         <span class="stat-label">Projects</span>
                     </div>
-                    <div class="stat">
+                    <div class="stat" data-aos="zoom-in" data-aos-delay="400">
                         <span class="stat-number">10+</span>
                         <span class="stat-label">Certifications</span>
                     </div>
-                    <div class="stat">
+                    <div class="stat" data-aos="zoom-in" data-aos-delay="600">
                         <span class="stat-number">3+</span>
                         <span class="stat-label">Technologies</span>
                     </div>
                 </div>
             </div>
-            <div class="hero-image">
+            <div class="hero-image" data-aos="fade-left" data-aos-duration="1000">
                 <div class="image-wrapper">
                     <div class="profile-circle"></div>
                     <div class="profile-image">
@@ -102,16 +105,16 @@
     <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <h2>About Me</h2>
                 <div class="underline"></div>
             </div>
             <div class="about-content">
-                <div class="about-text">
+                <div class="about-text" data-aos="fade-right">
                     <h3>Who Am I?</h3>
                     <p>I am a dedicated Computer Science and Engineering student at Lovely Professional University with a strong passion for data analytics and software development. My journey in tech is driven by curiosity and the desire to solve real-world problems through innovative solutions.</p>
                     <div class="info-grid">
-                        <div class="info-item">
+                        <div class="info-item" data-aos="zoom-in" data-aos-delay="100">
                             <i class="fas fa-graduation-cap"></i>
                             <div>
                                 <h4>Education</h4>
@@ -119,21 +122,21 @@
                                 <p>CGPA: 6.51</p>
                             </div>
                         </div>
-                        <div class="info-item">
+                        <div class="info-item" data-aos="zoom-in" data-aos-delay="200">
                             <i class="fas fa-map-marker-alt"></i>
                             <div>
                                 <h4>Location</h4>
                                 <p>Punjab, India</p>
                             </div>
                         </div>
-                        <div class="info-item">
+                        <div class="info-item" data-aos="zoom-in" data-aos-delay="300">
                             <i class="fas fa-code"></i>
                             <div>
                                 <h4>Interests</h4>
                                 <p>Data Science, Web Dev, AI/ML</p>
                             </div>
                         </div>
-                        <div class="info-item">
+                        <div class="info-item" data-aos="zoom-in" data-aos-delay="400">
                             <i class="fas fa-heart"></i>
                             <div>
                                 <h4>Hobbies</h4>
@@ -142,7 +145,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="education-details">
+                <div class="education-details" data-aos="fade-left">
                     <h3>Education Journey</h3>
                     <div class="edu-timeline">
                         <div class="edu-item">
@@ -179,12 +182,12 @@
     <!-- Skills Section -->
     <section id="skills" class="skills">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <h2>Technical Skills</h2>
                 <div class="underline"></div>
             </div>
             <div class="skills-container">
-                <div class="skill-category">
+                <div class="skill-category" data-aos="flip-left" data-aos-delay="100">
                     <div class="category-icon">
                         <i class="fas fa-code"></i>
                     </div>
@@ -197,7 +200,7 @@
                         <span class="skill-tag">SQL</span>
                     </div>
                 </div>
-                <div class="skill-category">
+                <div class="skill-category" data-aos="flip-left" data-aos-delay="200">
                     <div class="category-icon">
                         <i class="fas fa-chart-bar"></i>
                     </div>
@@ -210,7 +213,7 @@
                         <span class="skill-tag">Streamlit</span>
                     </div>
                 </div>
-                <div class="skill-category">
+                <div class="skill-category" data-aos="flip-left" data-aos-delay="300">
                     <div class="category-icon">
                         <i class="fas fa-tools"></i>
                     </div>
@@ -219,11 +222,11 @@
                         <span class="skill-tag">MySQL</span>
                         <span class="skill-tag">MS Excel</span>
                         <span class="skill-tag">Power BI</span>
-                        <span class="skill-tag">Jupyter Notebook</span>
+                        <span class="skill-tag">Jupyter</span>
                         <span class="skill-tag">Tableau</span>
                     </div>
                 </div>
-                <div class="skill-category">
+                <div class="skill-category" data-aos="flip-left" data-aos-delay="400">
                     <div class="category-icon">
                         <i class="fas fa-users"></i>
                     </div>
@@ -242,52 +245,50 @@
     <!-- Projects Section -->
     <section id="projects" class="projects">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <h2>Featured Projects</h2>
                 <div class="underline"></div>
             </div>
             <div class="projects-grid">
-                <div class="project-card">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="project-icon">
                         <i class="fas fa-charging-station"></i>
                     </div>
                     <h3>EV Population Dashboard</h3>
                     <div class="project-date">Mar 2025 - Apr 2025</div>
-                    <p>Built an interactive Excel dashboard to analyze Electric Vehicle population trends and regional distributions. Cleaned, pre-processed, and explored datasets to identify key EV adoption patterns.</p>
+                    <p>Built an interactive Excel dashboard to analyze Electric Vehicle population trends and regional distributions.</p>
                     <div class="project-tech">
                         <span>Excel</span>
                         <span>Pivot Tables</span>
-                        <span>Data Visualization</span>
+                        <span>Data Viz</span>
                     </div>
                     <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="project-icon">
                         <i class="fas fa-film"></i>
                     </div>
                     <h3>Bollywood Movies Analysis</h3>
                     <div class="project-date">Mar 2025 - Apr 2025</div>
-                    <p>Performed EDA on Bollywood movie data to identify trends in genre, ratings, and box-office performance. Cleaned and processed data using Python libraries for accurate analysis.</p>
+                    <p>Performed EDA on Bollywood movie data to identify trends in genre, ratings, and box-office performance.</p>
                     <div class="project-tech">
                         <span>Python</span>
                         <span>Pandas</span>
                         <span>Matplotlib</span>
-                        <span>Seaborn</span>
                     </div>
                     <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
                 </div>
-                <div class="project-card">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="project-icon">
                         <i class="fas fa-hospital-user"></i>
                     </div>
-                    <h3>Smart Hospital Management System</h3>
+                    <h3>Smart Hospital Management</h3>
                     <div class="project-date">Jun 2025 - Jul 2025</div>
-                    <p>Built a comprehensive hospital management system using C++ with OOP and DSA concepts. Implemented appointment queue, billing, and data management modules with modular design.</p>
+                    <p>Built a comprehensive system using C++ with OOP and DSA concepts with appointment queue and billing.</p>
                     <div class="project-tech">
                         <span>C++</span>
                         <span>OOP</span>
                         <span>DSA</span>
-                        <span>Queue</span>
                     </div>
                     <a href="#" class="project-link">View Project <i class="fas fa-arrow-right"></i></a>
                 </div>
@@ -298,21 +299,21 @@
     <!-- Training & Certifications -->
     <section class="training">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <h2>Training & Certifications</h2>
                 <div class="underline"></div>
             </div>
             <div class="training-grid">
-                <div class="training-card">
+                <div class="training-card" data-aos="fade-right">
                     <i class="fas fa-laptop-code"></i>
                     <h3>C++ OOPs & DSA Training</h3>
                     <p>CSE PATHSHALA</p>
                     <span class="date">Jun 2025 - Jul 2025</span>
                     <div class="training-desc">
-                        <p>Smart Hospital Management System project using OOP and DSA concepts with appointment queue, billing, and data management modules.</p>
+                        <p>Smart Hospital Management System project using OOP and DSA concepts.</p>
                     </div>
                 </div>
-                <div class="cert-grid">
+                <div class="cert-grid" data-aos="fade-left">
                     <div class="cert-item">
                         <i class="fas fa-certificate"></i>
                         <div>
@@ -361,20 +362,20 @@
     <!-- Achievements Section -->
     <section id="achievements" class="achievements">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <h2>Achievements</h2>
                 <div class="underline"></div>
             </div>
             <div class="achievements-grid">
-                <div class="achievement-card">
+                <div class="achievement-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="achievement-icon">
                         <i class="fas fa-hand-holding-heart"></i>
                     </div>
                     <h3>NGO Volunteer</h3>
-                    <p>Volunteered with an NGO supporting child rights and education initiatives</p>
+                    <p>Supported child rights and education initiatives</p>
                     <span class="achievement-date">Jul 2024</span>
                 </div>
-                <div class="achievement-card">
+                <div class="achievement-card" data-aos="zoom-in" data-aos-delay="200">
                     <div class="achievement-icon">
                         <i class="fas fa-chess-queen"></i>
                     </div>
@@ -382,12 +383,12 @@
                     <p>Secured Silver Medal at Global Level Chess Competition</p>
                     <span class="achievement-date">Oct 2019</span>
                 </div>
-                <div class="achievement-card">
+                <div class="achievement-card" data-aos="zoom-in" data-aos-delay="300">
                     <div class="achievement-icon">
                         <i class="fas fa-trophy"></i>
                     </div>
                     <h3>Leadership Excellence</h3>
-                    <p>Led tech discussions and team projects with strategic mindset</p>
+                    <p>Led tech discussions and team projects</p>
                     <span class="achievement-date">2024-2025</span>
                 </div>
             </div>
@@ -397,12 +398,12 @@
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <h2>Get In Touch</h2>
                 <div class="underline"></div>
             </div>
             <div class="contact-content">
-                <div class="contact-info">
+                <div class="contact-info" data-aos="fade-right">
                     <h3>Let's Connect</h3>
                     <p>I'm always interested in hearing about new opportunities, collaborations, or just having a chat about tech and data!</p>
                     <div class="contact-details">
@@ -417,14 +418,14 @@
                             <i class="fab fa-github"></i>
                             <div>
                                 <h4>GitHub</h4>
-                                <a href="https://github.com/umang1717" target="_blank">https://github.com/umang1717</a>
+                                <a href="https://github.com/umang1717" target="_blank">github.com/umang1717</a>
                             </div>
                         </div>
                         <div class="contact-item">
                             <i class="fab fa-linkedin"></i>
                             <div>
                                 <h4>LinkedIn</h4>
-                                <a href="https://www.linkedin.com/in/umang1717/" target="_blank">https://www.linkedin.com/in/umang1717/</a>
+                                <a href="https://www.linkedin.com/in/umang1717/" target="_blank">linkedin.com/in/umang1717</a>
                             </div>
                         </div>
                         <div class="contact-item">
@@ -436,7 +437,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="contact-form">
+                <div class="contact-form" data-aos="fade-left">
                     <form id="contactForm">
                         <input type="text" placeholder="Your Name" required>
                         <input type="email" placeholder="Your Email" required>
@@ -455,6 +456,7 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="javascript.js"></script>
 </body>
 </html>
