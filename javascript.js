@@ -129,69 +129,54 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ==================== RESUME DOWNLOAD - WORKS WITH umang-resume-2.jpg ====================
+    // Resume Download Functionality
     const downloadBtn = document.getElementById('downloadResumeBtn');
+    const downloadAltBtn = document.getElementById('downloadAltBtn');
+    const fullscreenBtn = document.getElementById('fullscreenViewBtn');
+    const resumeViewer = document.getElementById('resumeViewer');
+    const resumeIframe = document.querySelector('.resume-iframe');
+    const resumeOverlay = document.getElementById('resumeOverlay');
     
-    function downloadResume() {
-        // Show preparing message
-        showNotification('📄 Preparing your resume...', 'info');
-        
-        // Your resume file name
-        const resumeFile = 'umang-resume-2.jpg';
-        
-        // Try multiple methods to ensure download works from anywhere
-        fetch(resumeFile, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'image/jpeg',
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: File not found`);
-            }
-            return response.blob();
-        })
-        .then(blob => {
-            // Create blob URL and trigger download
-            const blobUrl = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = blobUrl;
-            link.download = 'Umang_Raj_Resume.jpg';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(blobUrl);
-            showNotification('✅ Resume downloaded successfully!', 'success');
-        })
-        .catch(error => {
-            console.error('Download error:', error);
-            
-            // Fallback: Try direct link
-            try {
-                const link = document.createElement('a');
-                link.href = resumeFile;
-                link.download = 'Umang_Raj_Resume.jpg';
-                link.target = '_blank';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                showNotification('✅ Resume download started!', 'success');
-            } catch (fallbackError) {
-                // Last resort: Open in new tab
-                window.open(resumeFile, '_blank');
-                showNotification('📄 Resume opened in new tab. Right-click to save.', 'info');
+    // Hide overlay when iframe loads
+    if (resumeIframe) {
+        resumeIframe.addEventListener('load', function() {
+            if (resumeOverlay) {
+                setTimeout(() => {
+                    resumeOverlay.classList.add('hide');
+                }, 1000);
             }
         });
+    }
+    
+    // Fullscreen function
+    if (fullscreenBtn && resumeViewer) {
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                resumeViewer.requestFullscreen().catch(err => {
+                    console.log('Fullscreen error:', err);
+                    showNotification('Fullscreen mode not available', 'info');
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+    }
+    
+    function downloadResume() {
+        window.open('https://drive.google.com/file/d/1e_k2aczUqzMXZRxLxNV5wl3nUiB5Gw0U/view', '_blank');
+        showNotification('Opening resume in Google Drive...', 'info');
     }
     
     if (downloadBtn) {
         downloadBtn.addEventListener('click', downloadResume);
     }
     
+    if (downloadAltBtn) {
+        downloadAltBtn.addEventListener('click', downloadResume);
+    }
+    
     // Notification function
     function showNotification(message, type = 'info') {
-        // Remove any existing notifications
         const existingNotifications = document.querySelectorAll('.notification');
         existingNotifications.forEach(notif => notif.remove());
         
@@ -215,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
     
-    // Add notification styles dynamically if not exists
+    // Add notification styles
     if (!document.querySelector('#notification-styles')) {
         const style = document.createElement('style');
         style.id = 'notification-styles';
@@ -345,20 +330,6 @@ document.addEventListener('DOMContentLoaded', function() {
         statsObserver.observe(statsContainer);
     }
     
-    // Check if resume file is accessible
-    fetch('umang-resume-2.jpg', { method: 'HEAD' })
-        .then(response => {
-            if (response.ok) {
-                console.log('✅ Resume file found and accessible!');
-            } else {
-                console.warn('⚠️ Resume file not found. Make sure umang-resume-2.jpg is in the same directory.');
-            }
-        })
-        .catch(error => {
-            console.error('Error checking resume:', error);
-        });
-    
     console.log('🎉 Portfolio loaded successfully!');
-    console.log('📍 Current URL:', window.location.href);
-    console.log('📄 Resume file: umang-resume-2.jpg');
+    console.log('📍 Google Drive Resume URL: https://drive.google.com/file/d/1e_k2aczUqzMXZRxLxNV5wl3nUiB5Gw0U/view');
 });
