@@ -107,18 +107,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Download Resume Functionality - Downloads PDF directly
+    // Download Resume Functionality - Downloads your specific PDF file
     const downloadBtn = document.getElementById('downloadResumeBtn');
     
     function downloadResume() {
-        // Create a link to download the resume PDF
-        // You need to place your actual resume PDF file named "Umang_Raj_Resume.pdf" in the same folder
-        const resumeUrl = 'Umang_Raj_Resume.pdf';
+        // Your exact resume filename
+        const resumeFileName = 'umang-resume.pdf';
         
-        // Create an anchor element
+        // Create an anchor element to trigger download
         const link = document.createElement('a');
-        link.href = resumeUrl;
-        link.download = 'Umang_Raj_Resume.pdf';
+        link.href = resumeFileName;
+        link.download = 'Umang_Raj_Resume.pdf'; // This will be the downloaded file name
         
         // Trigger download
         document.body.appendChild(link);
@@ -223,7 +222,6 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
     
-    // Social links are already working with href attributes
-    // They will open in new tab because of target="_blank"
     console.log('Portfolio loaded successfully!');
+    console.log('Resume download will look for: umang-resume.pdf');
 });
