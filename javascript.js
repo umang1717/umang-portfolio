@@ -107,37 +107,107 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Download Resume Functionality - Downloads your specific PDF file
+    // Download Resume Functionality - Works from anywhere
     const downloadBtn = document.getElementById('downloadResumeBtn');
     
     function downloadResume() {
-        // Your exact resume filename
-        const resumeFileName = 'umang-resume.pdf';
+        // Show loading message
+        showNotification('Preparing your resume...', 'info');
         
-        // Create an anchor element to trigger download
-        const link = document.createElement('a');
-        link.href = resumeFileName;
-        link.download = 'Umang_Raj_Resume.pdf'; // This will be the downloaded file name
+        // Try multiple possible paths for the resume file
+        const possiblePaths = [
+            'umang-resume.pdf',           // Same directory
+            './umang-resume.pdf',         // Same directory with ./
+            '/umang-resume.pdf',          // Root directory
+            'resume/umang-resume.pdf',    // Resume folder
+            './resume/umang-resume.pdf',  // Resume folder with ./
+            'assets/umang-resume.pdf',    // Assets folder
+            './assets/umang-resume.pdf'   // Assets folder with ./
+        ];
         
-        // Trigger download
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        // Try to download from the first path that works
+        let downloadAttempted = false;
         
-        // Show success message
-        showNotification('Resume download started!', 'success');
+        for (let path of possiblePaths) {
+            if (!downloadAttempted) {
+                const link = document.createElement('a');
+                link.href = path;
+                link.download = 'Umang_Raj_Resume.pdf';
+                link.style.display = 'none';
+                
+                // Add error handling for each attempt
+                link.onerror = function() {
+                    console.log(`Failed to load from: ${path}`);
+                    // Continue to next path
+                    downloadAttempted = false;
+                };
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                downloadAttempted = true;
+                
+                // Show success message
+                setTimeout(() => {
+                    showNotification('Resume download started!', 'success');
+                }, 500);
+                
+                break;
+            }
+        }
+        
+        // If after all attempts, still not working, show helpful message
+        setTimeout(() => {
+            if (!downloadAttempted) {
+                showNotification('⚠️ Resume file not found. Please contact me directly for resume.', 'info');
+                console.error('Resume file not found. Make sure umang-resume.pdf is in the same directory as index.html');
+            }
+        }, 1000);
     }
     
+    // Alternative: Direct fetch method (more reliable for some browsers)
+    function downloadResumeAlternative() {
+        const resumeUrl = 'umang-resume.pdf';
+        
+        fetch(resumeUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Resume not found');
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'Umang_Raj_Resume.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+                showNotification('Resume download started!', 'success');
+            })
+            .catch(error => {
+                console.error('Download error:', error);
+                showNotification('⚠️ Resume file not available yet. Please check back later.', 'info');
+            });
+    }
+    
+    // Use the main download function
     if (downloadBtn) {
         downloadBtn.addEventListener('click', downloadResume);
     }
     
     // Notification function
     function showNotification(message, type = 'info') {
+        // Remove any existing notifications
+        const existingNotifications = document.querySelectorAll('.notification');
+        existingNotifications.forEach(notif => notif.remove());
+        
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
         notification.innerHTML = `
-            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'info' ? 'fa-info-circle' : 'fa-exclamation-circle'}"></i>
             <span>${message}</span>
         `;
         document.body.appendChild(notification);
@@ -173,6 +243,8 @@ document.addEventListener('DOMContentLoaded', function() {
             transition: transform 0.3s ease;
             border-left: 4px solid #6366f1;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            font-size: 0.9rem;
+            max-width: 90vw;
         }
         .notification.show {
             transform: translateX(0);
@@ -183,8 +255,25 @@ document.addEventListener('DOMContentLoaded', function() {
         .notification-success i {
             color: #10b981;
         }
+        .notification-info {
+            border-left-color: #6366f1;
+        }
+        .notification-info i {
+            color: #6366f1;
+        }
         .notification i {
             font-size: 1.2rem;
+        }
+        @media (max-width: 768px) {
+            .notification {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                transform: translateY(100px);
+            }
+            .notification.show {
+                transform: translateY(0);
+            }
         }
     `;
     document.head.appendChild(style);
@@ -222,6 +311,19 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
     
-    console.log('Portfolio loaded successfully!');
-    console.log('Resume download will look for: umang-resume.pdf');
+    // Check if resume file exists (for debugging)
+    fetch('umang-resume.pdf', { method: 'HEAD' })
+        .then(response => {
+            if (response.ok) {
+                console.log('✅ Resume file found! Ready for download.');
+            } else {
+                console.warn('⚠️ Resume file not found. Make sure umang-resume.pdf is in the same directory.');
+            }
+        })
+        .catch(error => {
+            console.error('Error checking resume file:', error);
+        });
+    
+    console.log('🎉 Portfolio loaded successfully!');
+    console.log('📄 Resume download will look for: umang-resume.pdf');
 });
