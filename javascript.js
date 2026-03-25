@@ -107,93 +107,72 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Download Resume Functionality - Works from anywhere
+    // ==================== RESUME DOWNLOAD - WORKS FROM ANYWHERE ====================
     const downloadBtn = document.getElementById('downloadResumeBtn');
     
+    // Get the base URL of the current page (works on GitHub Pages, localhost, etc.)
+    function getBaseUrl() {
+        const currentUrl = window.location.href;
+        const baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/') + 1);
+        return baseUrl;
+    }
+    
     function downloadResume() {
-        // Show loading message
-        showNotification('Preparing your resume...', 'info');
+        // Show preparing message
+        showNotification('📄 Preparing your resume...', 'info');
         
-        // Try multiple possible paths for the resume file
-        const possiblePaths = [
-            'umang-resume.pdf',           // Same directory
-            './umang-resume.pdf',         // Same directory with ./
-            '/umang-resume.pdf',          // Root directory
-            'resume/umang-resume.pdf',    // Resume folder
-            './resume/umang-resume.pdf',  // Resume folder with ./
-            'assets/umang-resume.pdf',    // Assets folder
-            './assets/umang-resume.pdf'   // Assets folder with ./
-        ];
+        // Try multiple methods to ensure download works
+        const resumeFile = 'umang-resume.pdf';
+        const baseUrl = getBaseUrl();
         
-        // Try to download from the first path that works
-        let downloadAttempted = false;
-        
-        for (let path of possiblePaths) {
-            if (!downloadAttempted) {
+        // Method 1: Direct download using fetch (most reliable)
+        fetch(resumeFile, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/pdf',
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            // Create blob URL and trigger download
+            const blobUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = 'Umang_Raj_Resume.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(blobUrl);
+            showNotification('✅ Resume downloaded successfully!', 'success');
+        })
+        .catch(error => {
+            console.error('Download error:', error);
+            
+            // Method 2: Try direct link as fallback
+            try {
                 const link = document.createElement('a');
-                link.href = path;
+                link.href = resumeFile;
                 link.download = 'Umang_Raj_Resume.pdf';
-                link.style.display = 'none';
-                
-                // Add error handling for each attempt
-                link.onerror = function() {
-                    console.log(`Failed to load from: ${path}`);
-                    // Continue to next path
-                    downloadAttempted = false;
-                };
-                
+                link.target = '_blank';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                downloadAttempted = true;
+                showNotification('✅ Resume download started!', 'success');
+            } catch (fallbackError) {
+                console.error('Fallback error:', fallbackError);
                 
-                // Show success message
-                setTimeout(() => {
-                    showNotification('Resume download started!', 'success');
-                }, 500);
-                
-                break;
+                // Method 3: Open in new tab as last resort
+                window.open(resumeFile, '_blank');
+                showNotification('📄 Resume opened in new tab. Use Ctrl+S to save.', 'info');
             }
-        }
-        
-        // If after all attempts, still not working, show helpful message
-        setTimeout(() => {
-            if (!downloadAttempted) {
-                showNotification('⚠️ Resume file not found. Please contact me directly for resume.', 'info');
-                console.error('Resume file not found. Make sure umang-resume.pdf is in the same directory as index.html');
-            }
-        }, 1000);
+        });
     }
     
-    // Alternative: Direct fetch method (more reliable for some browsers)
-    function downloadResumeAlternative() {
-        const resumeUrl = 'umang-resume.pdf';
-        
-        fetch(resumeUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Resume not found');
-                }
-                return response.blob();
-            })
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = 'Umang_Raj_Resume.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                window.URL.revokeObjectURL(url);
-                showNotification('Resume download started!', 'success');
-            })
-            .catch(error => {
-                console.error('Download error:', error);
-                showNotification('⚠️ Resume file not available yet. Please check back later.', 'info');
-            });
-    }
-    
-    // Use the main download function
     if (downloadBtn) {
         downloadBtn.addEventListener('click', downloadResume);
     }
@@ -311,19 +290,19 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
     
-    // Check if resume file exists (for debugging)
+    // Check if resume file is accessible
     fetch('umang-resume.pdf', { method: 'HEAD' })
         .then(response => {
             if (response.ok) {
-                console.log('✅ Resume file found! Ready for download.');
+                console.log('✅ Resume file found and accessible!');
             } else {
                 console.warn('⚠️ Resume file not found. Make sure umang-resume.pdf is in the same directory.');
             }
         })
         .catch(error => {
-            console.error('Error checking resume file:', error);
+            console.error('Error checking resume:', error);
         });
     
     console.log('🎉 Portfolio loaded successfully!');
-    console.log('📄 Resume download will look for: umang-resume.pdf');
+    console.log('📍 Current URL:', window.location.href);
 });
